@@ -16,7 +16,7 @@ fi
 # Extract directory and class name
 dir="$(dirname "$CLASS_PATH")"
 classname="$(basename "$CLASS_PATH")"
-namespace_name="$(echo "$dir" | tr '/' '::')"
+namespace_name="$(echo "$dir" | sed 's#/#::#g')"
 
 # Ensure the class is inside a subdirectory
 if [[ "$dir" == "." ]]; then
