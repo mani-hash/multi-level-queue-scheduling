@@ -1,6 +1,7 @@
 #ifndef MEDIUMPROCESSGENERATOR_H
 #define MEDIUMPROCESSGENERATOR_H
 
+#include <memory>
 #include "ProcessGenerator.h"
 
 namespace Process::Generator
@@ -9,7 +10,7 @@ namespace Process::Generator
     class MediumProcessGenerator: public ProcessGenerator
     {
         public:
-            MediumProcessGenerator();
+            MediumProcessGenerator(std::shared_ptr<ProcessTable> processTable);
 
             void getProcessCountFromUser() override;
     };

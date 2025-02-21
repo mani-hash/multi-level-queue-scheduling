@@ -5,7 +5,8 @@
 namespace Process::Generator
 {
 
-    HighProcessGenerator::HighProcessGenerator(): ProcessGenerator(Q1) {}
+    HighProcessGenerator::HighProcessGenerator(std::shared_ptr<ProcessTable> processTable):
+    ProcessGenerator(Q1, processTable) {}
 
     void HighProcessGenerator::getProcessCountFromUser()
     {

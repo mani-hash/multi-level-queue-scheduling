@@ -5,7 +5,8 @@
 namespace Process::Generator
 {
 
-    MediumProcessGenerator::MediumProcessGenerator(): ProcessGenerator(Q2) {}
+    MediumProcessGenerator::MediumProcessGenerator(std::shared_ptr<ProcessTable> processTable):
+    ProcessGenerator(Q2, processTable) {}
 
     void MediumProcessGenerator::getProcessCountFromUser()
     {

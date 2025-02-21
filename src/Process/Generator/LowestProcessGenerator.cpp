@@ -5,7 +5,8 @@
 namespace Process::Generator
 {
 
-    LowestProcessGenerator::LowestProcessGenerator(): ProcessGenerator(Q3) {}
+    LowestProcessGenerator::LowestProcessGenerator(std::shared_ptr<ProcessTable> processTable):
+    ProcessGenerator(Q3, processTable) {}
 
     void LowestProcessGenerator::getProcessCountFromUser()
     {
