@@ -1,11 +1,19 @@
 #include <iostream>
+#include <memory>
 #include "ProcessGenerator.h"
 
 namespace Process::Generator
 {
 
-    ProcessGenerator::ProcessGenerator(const PriorityRange priorityRange) :
-    priorityRange(priorityRange), rng(priorityRange.min, priorityRange.max) {}
+    ProcessGenerator::ProcessGenerator
+    (
+        const PriorityRange priorityRange,
+        std::shared_ptr<ProcessTable> processTable
+    )
+    :
+    priorityRange(priorityRange),
+    processTable(processTable),
+    rng(priorityRange.min, priorityRange.max) {}
 
     void ProcessGenerator::getProcessCountFromUser()
     {
@@ -13,22 +21,48 @@ namespace Process::Generator
         std::cin >> noOfProcesses;
     }
 
-    ProcessControlBlock* ProcessGenerator::createProcess(int priorityLevel)
+    int ProcessGenerator::generateProcessId()
+    {
+        static int processCounter = 0;
+
+        return processCounter++;
+    }
+
+    int ProcessGenerator::generateBurstTime()
+    {
+        static Utility::RandomNumberGenerator burstTimeGenerator(1, 20000);
+
+        return burstTimeGenerator.generate();
+
+    }
+
+    ProcessControlBlock ProcessGenerator::createProcess(int priorityLevel)
     {
         ProcessControlBlock process(
-            1,
-            "",
-            getPriorityForProcess(),
-            200,
-            3000
+            generateProcessId(),
+            "ready",
+            priorityLevel,
+            0,
+            generateBurstTime()
         );
 
-        return &process;
+        return process;
     }
 
     int ProcessGenerator::getPriorityForProcess()
     {
         return rng.generate();
+    }
+
+    void ProcessGenerator::generate()
+    {
+        for (size_t processIndex = 0; processIndex < noOfProcesses; processIndex++)
+        {
+            int priorityLevel = getPriorityForProcess();
+            ProcessControlBlock process = createProcess(priorityLevel);
+            processTable->addProcess(process);
+        }
+        
     }
 
 } // namespace Process::Generator
