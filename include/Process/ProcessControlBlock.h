@@ -31,7 +31,8 @@ namespace Process
                 ProcessState state,
                 int priority,
                 int arrivalTime,
-                int burstTime
+                int burstTime,
+                int waitingTime
             );
 
             int getProcessId() const;

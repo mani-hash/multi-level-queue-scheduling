@@ -9,7 +9,8 @@ namespace Process
         ProcessState state,
         int priority,
         int arrivalTime,
-        int burstTime
+        int burstTime,
+        int waitingTime
     )
     {
         this->processId = processId;
@@ -17,6 +18,7 @@ namespace Process
         this->priority = priority;
         this->arrivalTime = arrivalTime;
         this->burstTime = burstTime;
+        this->waitingTime = waitingTime;
         this->remainingBurstTime = burstTime;
     }
 
