@@ -62,7 +62,8 @@ build()
 }
 
 # Function to run the executable
-run() {
+run()
+{
     if [ ! -f "$BIN_DIR/$TARGET" ]; then
         echo "Executable not found. Building the project first..."
         build
