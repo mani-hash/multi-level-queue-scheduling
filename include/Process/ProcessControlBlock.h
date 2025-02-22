@@ -37,6 +37,10 @@ namespace Process
 
             int getPriority() const;
 
+            bool operator>(const ProcessControlBlock& otherProcess) const;
+
+            bool operator<(const ProcessControlBlock& otherProcess) const;
+
     };
 }
 

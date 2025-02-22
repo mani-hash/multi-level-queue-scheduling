@@ -49,4 +49,14 @@ namespace Process
     {
         return priority; 
     }
+
+    bool ProcessControlBlock::operator<(const ProcessControlBlock& otherProcess) const
+    {
+        return burstTime < otherProcess.burstTime;
+    }
+
+    bool ProcessControlBlock::operator>(const ProcessControlBlock& otherProcess) const
+    {
+        return burstTime > otherProcess.burstTime;
+    }
 }
