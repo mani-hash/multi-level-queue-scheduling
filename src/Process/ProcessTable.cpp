@@ -36,4 +36,11 @@ namespace Process
 
     }
 
+    void ProcessTable::sort()
+    {
+        std::sort(processes.begin(), processes.end(), [](const ProcessControlBlock& processA, const ProcessControlBlock& processB) {
+            return processA.getArrivalTime() < processB.getArrivalTime();
+        });
+    }
+
 } // namespace Process

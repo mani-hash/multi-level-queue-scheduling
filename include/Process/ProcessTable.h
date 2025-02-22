@@ -18,6 +18,8 @@ namespace Process
             void removeProcess(int processId);
 
             ProcessControlBlock* getProcess(int processId);
+
+            void sort();
     };
 
 } // namespace Process
