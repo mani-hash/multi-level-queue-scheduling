@@ -11,6 +11,7 @@ namespace Process
     {
         private:
             std::vector<ProcessControlBlock> processes;
+            int terminatedProcess;
 
         public:
             void addProcess(const ProcessControlBlock& process);
@@ -22,6 +23,12 @@ namespace Process
             void sort();
 
             const std::vector<ProcessControlBlock>& getProcessList() const;
+
+            int getTerminatedProcessCount() const;
+
+            void incrementTerminatedProcessCount();
+
+            int getAllProcessCount() const;
     };
 
 } // namespace Process

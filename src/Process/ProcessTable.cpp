@@ -48,4 +48,19 @@ namespace Process
         return processes;
     }
 
+    int ProcessTable::getTerminatedProcessCount() const
+    {
+        return terminatedProcess;
+    }
+
+    void ProcessTable::incrementTerminatedProcessCount()
+    {
+        terminatedProcess+=1;
+    }
+
+    int ProcessTable::getAllProcessCount() const
+    {
+        return processes.size();
+    }
+
 } // namespace Process
