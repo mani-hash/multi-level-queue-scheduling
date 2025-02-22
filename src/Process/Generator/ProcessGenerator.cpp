@@ -48,7 +48,7 @@ namespace Process::Generator
     {
         ProcessControlBlock process(
             generateProcessId(),
-            "ready",
+            READY,
             priorityLevel,
             generateArrivalTime(),
             generateBurstTime()
