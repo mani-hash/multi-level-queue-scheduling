@@ -44,4 +44,9 @@ namespace Process
     {
         remainingBurstTime = burstTime - elapsedTime;
     }
+
+    int ProcessControlBlock::getPriority() const
+    {
+        return priority; 
+    }
 }

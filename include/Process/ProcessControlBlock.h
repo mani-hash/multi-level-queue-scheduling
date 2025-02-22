@@ -35,6 +35,8 @@ namespace Process
 
             void setRemainingBurstTime(int elapsedTime);
 
+            int getPriority() const;
+
     };
 }
 
