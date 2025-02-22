@@ -1,6 +1,6 @@
 #include <iostream>
-#include "process.h"
-#include "MediumProcessGenerator.h"
+#include "Process/process.h"
+#include "Process/Generator/MediumProcessGenerator.h"
 
 namespace Process::Generator
 {

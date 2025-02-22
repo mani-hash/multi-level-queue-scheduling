@@ -2,10 +2,10 @@
 #define PROCESSGENERATOR_H
 
 #include <memory>
-#include "process.h"
-#include "ProcessControlBlock.h"
-#include "ProcessTable.h"
-#include "RandomNumberGenerator.h"
+#include "Process/process.h"
+#include "Process/ProcessControlBlock.h"
+#include "Process/ProcessTable.h"
+#include "Utility/RandomNumberGenerator.h"
 
 namespace Process::Generator
 {

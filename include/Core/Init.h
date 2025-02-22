@@ -2,7 +2,7 @@
 #define INIT_H
 
 #include <memory>
-#include "ProcessTable.h"
+#include "Process/ProcessTable.h"
 
 namespace Core
 {

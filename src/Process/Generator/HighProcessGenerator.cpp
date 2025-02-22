@@ -1,6 +1,6 @@
 #include <iostream>
-#include "process.h"
-#include "HighProcessGenerator.h"
+#include "Process/process.h"
+#include "Process/Generator/HighProcessGenerator.h"
 
 namespace Process::Generator
 {

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <memory>
-#include "ProcessGenerator.h"
+#include "Process/Generator/ProcessGenerator.h"
 #include "macros.h"
 
 namespace Process::Generator

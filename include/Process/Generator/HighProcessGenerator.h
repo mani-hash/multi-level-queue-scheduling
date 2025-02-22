@@ -2,7 +2,7 @@
 #define HIGHPROCESSGENERATOR_H
 
 #include <memory>
-#include "ProcessGenerator.h"
+#include "Process/Generator/ProcessGenerator.h"
 
 namespace Process::Generator
 {

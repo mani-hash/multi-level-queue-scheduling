@@ -1,11 +1,11 @@
-#include "Init.h"
+#include "Core/Init.h"
 
 #include <iostream>
 #include <memory>
-#include "HighestProcessGenerator.h"
-#include "HighProcessGenerator.h"
-#include "MediumProcessGenerator.h"
-#include "LowestProcessGenerator.h"
+#include "Process/Generator/HighestProcessGenerator.h"
+#include "Process/Generator/HighProcessGenerator.h"
+#include "Process/Generator/MediumProcessGenerator.h"
+#include "Process/Generator/LowestProcessGenerator.h"
 
 namespace Core
 {

@@ -2,7 +2,7 @@
 #define PROCESSTABLE_H
 
 #include <vector>
-#include "ProcessControlBlock.h"
+#include "Process/ProcessControlBlock.h"
 
 namespace Process
 {
