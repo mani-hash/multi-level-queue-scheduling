@@ -62,12 +62,12 @@ namespace Process
 
     bool ProcessControlBlock::operator<(const ProcessControlBlock& otherProcess) const
     {
-        return burstTime < otherProcess.burstTime;
+        return remainingBurstTime < otherProcess.remainingBurstTime;
     }
 
     bool ProcessControlBlock::operator>(const ProcessControlBlock& otherProcess) const
     {
-        return burstTime > otherProcess.burstTime;
+        return remainingBurstTime > otherProcess.remainingBurstTime;
     }
 
     ProcessState ProcessControlBlock::getState() const
