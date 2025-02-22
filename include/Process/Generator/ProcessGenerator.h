@@ -21,6 +21,8 @@ namespace Process::Generator
 
             int generateProcessId();
 
+            int generateArrivalTime();
+
             int generateBurstTime();
 
             ProcessControlBlock createProcess(int priorityLevel);

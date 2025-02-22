@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include "ProcessGenerator.h"
+#include "macros.h"
 
 namespace Process::Generator
 {
@@ -28,6 +29,13 @@ namespace Process::Generator
         return processCounter++;
     }
 
+    int ProcessGenerator::generateArrivalTime()
+    {
+        static Utility::RandomNumberGenerator arrivalTimeGenerator(0, PROGRAM_LIFE);
+
+        return arrivalTimeGenerator.generate();
+    }
+
     int ProcessGenerator::generateBurstTime()
     {
         static Utility::RandomNumberGenerator burstTimeGenerator(1, 20000);
@@ -42,7 +50,7 @@ namespace Process::Generator
             generateProcessId(),
             "ready",
             priorityLevel,
-            0,
+            generateArrivalTime(),
             generateBurstTime()
         );
 
