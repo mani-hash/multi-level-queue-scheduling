@@ -63,4 +63,15 @@ namespace Process
         return processes.size();
     }
 
+    void ProcessTable::incrementWaitingTime()
+    {
+        for (auto processIter = processes.begin(); processIter != processes.end(); ++processIter)
+        {
+            if (processIter->getState() == WAITING)
+            {
+                processIter->setWaitingTime(1);
+            }
+        }
+    }
+
 } // namespace Process

@@ -29,6 +29,8 @@ namespace Process
             void incrementTerminatedProcessCount();
 
             int getAllProcessCount() const;
+
+            void incrementWaitingTime();
     };
 
 } // namespace Process
