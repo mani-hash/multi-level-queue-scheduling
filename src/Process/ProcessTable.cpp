@@ -43,4 +43,9 @@ namespace Process
         });
     }
 
+    const std::vector<ProcessControlBlock>& ProcessTable::getProcessList() const
+    {
+        return processes;
+    }
+
 } // namespace Process

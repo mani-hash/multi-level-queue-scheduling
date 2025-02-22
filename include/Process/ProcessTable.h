@@ -20,6 +20,8 @@ namespace Process
             ProcessControlBlock* getProcess(int processId);
 
             void sort();
+
+            const std::vector<ProcessControlBlock>& getProcessList() const;
     };
 
 } // namespace Process
