@@ -30,6 +30,16 @@ namespace Process
         return arrivalTime;
     }
 
+    int ProcessControlBlock::getWaitingTime() const
+    {
+        return waitingTime;
+    }
+
+    void ProcessControlBlock::setWaitingTime(int elapsedTime)
+    {
+        waitingTime+=1;
+    }
+
     int ProcessControlBlock::getBurstTime() const
     {
         return burstTime;
