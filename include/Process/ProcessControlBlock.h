@@ -27,6 +27,8 @@ namespace Process
 
             int getProcessId() const;
 
+            int getArrivalTime() const;
+
             int getBurstTime() const;
 
             int getRemainingBurstTime() const;

@@ -25,6 +25,11 @@ namespace Process
         return processId;
     }
 
+    int ProcessControlBlock::getArrivalTime() const
+    {
+        return arrivalTime;
+    }
+
     int ProcessControlBlock::getBurstTime() const
     {
         return burstTime;
