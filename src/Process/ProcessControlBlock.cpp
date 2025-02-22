@@ -6,7 +6,7 @@ namespace Process
     ProcessControlBlock::ProcessControlBlock
     (
         int processId,
-        std::string state,
+        ProcessState state,
         int priority,
         int arrivalTime,
         int burstTime
@@ -58,5 +58,15 @@ namespace Process
     bool ProcessControlBlock::operator>(const ProcessControlBlock& otherProcess) const
     {
         return burstTime > otherProcess.burstTime;
+    }
+
+    ProcessState ProcessControlBlock::getState() const
+    {
+        return state;
+    }
+
+    void ProcessControlBlock::setState(ProcessState state)
+    {
+        this->state = state;
     }
 }

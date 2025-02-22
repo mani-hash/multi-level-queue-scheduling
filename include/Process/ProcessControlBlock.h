@@ -5,11 +5,19 @@
 
 namespace Process
 {
+    enum ProcessState
+    {
+        READY,
+        ACTIVE,
+        WAITING,
+        COMPLETE,
+    };
+
     class ProcessControlBlock
     {
         private:
             int processId;
-            std::string state;
+            ProcessState state;
             int priority;
             int arrivalTime;
             int burstTime;
@@ -19,7 +27,7 @@ namespace Process
             ProcessControlBlock
             (
                 int processId,
-                std::string state,
+                ProcessState state,
                 int priority,
                 int arrivalTime,
                 int burstTime
@@ -40,6 +48,10 @@ namespace Process
             bool operator>(const ProcessControlBlock& otherProcess) const;
 
             bool operator<(const ProcessControlBlock& otherProcess) const;
+
+            ProcessState getState() const;
+
+            void setState(ProcessState state);
 
     };
 }
