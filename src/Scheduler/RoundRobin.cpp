@@ -13,7 +13,7 @@ namespace Scheduler
 
     bool RoundRobin::shouldPreempt()
     {
-        if (!queue.empty() && currentTimeQuantum >= TIME_QUANTUM)
+        if (!queue.empty() && currentTimeQuantum >= maxTimeQuantum)
         {
             return true;
         }
