@@ -46,7 +46,7 @@ namespace Scheduler
 
         Process::ProcessControlBlock& process = queue.front().get();
         process.setState(Process::ACTIVE);
-        process.setRemainingBurstTime(1);
+        process.decrementRemainingBurstTime();
     }
 
     void FirstInFirstOut::idleQueue()

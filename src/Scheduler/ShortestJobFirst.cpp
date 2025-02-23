@@ -65,7 +65,7 @@ namespace Scheduler
         Process::ProcessControlBlock& process = queue.top().get();
         process.setState(Process::ACTIVE);
 
-        process.setRemainingBurstTime(1);
+        process.decrementRemainingBurstTime();
     }
 
     void ShortestJobFirst::idleQueue()
