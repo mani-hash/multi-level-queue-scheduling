@@ -12,6 +12,11 @@ namespace Process::Generator
     {
         std::cout << "Enter number of \"HIGHEST\" priority processes = ";
         std::cin >> noOfProcesses;
+
+        if (noOfProcesses < 0)
+        {
+            throw new std::invalid_argument("Number of processes can't be negative\n");
+        }
     }
 
 
