@@ -24,7 +24,7 @@ namespace Process::Generator
 
     int ProcessGenerator::generateProcessId()
     {
-        static int processCounter = 0;
+        static int processCounter = 1;
 
         return processCounter++;
     }
@@ -38,7 +38,7 @@ namespace Process::Generator
 
     int ProcessGenerator::generateBurstTime()
     {
-        static Utility::RandomNumberGenerator burstTimeGenerator(1, 20000);
+        static Utility::RandomNumberGenerator burstTimeGenerator(1, 60000);
 
         return burstTimeGenerator.generate();
 
@@ -51,7 +51,8 @@ namespace Process::Generator
             READY,
             priorityLevel,
             generateArrivalTime(),
-            generateBurstTime()
+            generateBurstTime(),
+            0
         );
 
         return process;
