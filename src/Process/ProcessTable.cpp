@@ -77,13 +77,13 @@ namespace Process
         }
     }
 
-    std::map<std::string, float> ProcessTable::getAverageWaitingTimes() const
+    std::map<std::string, double> ProcessTable::getAverageWaitingTimes() const
     {
-        std::map<std::string, float> averageWaitingTimes;
+        std::map<std::string, double> averageWaitingTimes;
 
         typedef struct WaitingTime
         {
-            int totalWaitingCount;
+            long int totalWaitingCount;
             int noOfProcess;
         } WaitingTime;
 
@@ -133,21 +133,21 @@ namespace Process
             }
         }
 
-        averageWaitingTimes["q0"] = static_cast<float>(q0.totalWaitingCount) / q0.noOfProcess;
-        averageWaitingTimes["q1"] = static_cast<float>(q1.totalWaitingCount) / q1.noOfProcess;
-        averageWaitingTimes["q2"] = static_cast<float>(q2.totalWaitingCount) / q2.noOfProcess;
-        averageWaitingTimes["q3"] = static_cast<float>(q3.totalWaitingCount) / q3.noOfProcess;
+        averageWaitingTimes["q0"] = static_cast<double>(q0.totalWaitingCount) / q0.noOfProcess;
+        averageWaitingTimes["q1"] = static_cast<double>(q1.totalWaitingCount) / q1.noOfProcess;
+        averageWaitingTimes["q2"] = static_cast<double>(q2.totalWaitingCount) / q2.noOfProcess;
+        averageWaitingTimes["q3"] = static_cast<double>(q3.totalWaitingCount) / q3.noOfProcess;
 
         return averageWaitingTimes;
     }
 
-    std::map<std::string, float> ProcessTable::getAverageTurnAroundTimes() const
+    std::map<std::string, double> ProcessTable::getAverageTurnAroundTimes() const
     {
-        std::map<std::string, float> averageTurnAroundTimes;
+        std::map<std::string, double> averageTurnAroundTimes;
 
         typedef struct TurnAround
         {
-            int totalTurnAroundTime;
+            long int totalTurnAroundTime;
             int noOfProcess;
         } TurnAround;
 
@@ -174,7 +174,7 @@ namespace Process
         for (auto processIter = processes.begin(); processIter != processes.end(); ++processIter)
         {
             int processPriority = processIter->getPriority();
-            int turnaroundTime = processIter->getBurstTime() + processIter->getWaitingTime();
+            long int turnaroundTime = processIter->getBurstTime() + processIter->getWaitingTime();
 
             if (processPriority >= Q0.min && processPriority <= Q0.max)
             {
@@ -198,10 +198,10 @@ namespace Process
             }
         }
 
-        averageTurnAroundTimes["q0"] = static_cast<float>(q0.totalTurnAroundTime) / q0.noOfProcess;
-        averageTurnAroundTimes["q1"] = static_cast<float>(q1.totalTurnAroundTime) / q1.noOfProcess;
-        averageTurnAroundTimes["q2"] = static_cast<float>(q2.totalTurnAroundTime) / q2.noOfProcess;
-        averageTurnAroundTimes["q3"] = static_cast<float>(q3.totalTurnAroundTime) / q3.noOfProcess;
+        averageTurnAroundTimes["q0"] = static_cast<double>(q0.totalTurnAroundTime) / q0.noOfProcess;
+        averageTurnAroundTimes["q1"] = static_cast<double>(q1.totalTurnAroundTime) / q1.noOfProcess;
+        averageTurnAroundTimes["q2"] = static_cast<double>(q2.totalTurnAroundTime) / q2.noOfProcess;
+        averageTurnAroundTimes["q3"] = static_cast<double>(q3.totalTurnAroundTime) / q3.noOfProcess;
 
         return averageTurnAroundTimes;
     }
