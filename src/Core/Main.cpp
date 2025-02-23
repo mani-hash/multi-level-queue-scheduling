@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <functional>
+#include <map>
 #include "macros.h"
 #include "Utility/TimeTracker.h"
 #include "SchedulerBridge/QueueAssigner.h"
@@ -86,6 +87,50 @@ namespace Core
 
             time.setTime(executableTimeUntilNextProcess, executedTime);
         }        
+    }
+
+    void Main::displayQueueStatistics() const
+    {
+        std::map<std::string, float> averageWaitingTimes = processTable->getAverageWaitingTimes();
+        std::map<std::string, float> averageTurnAroundTimes = processTable->getAverageTurnAroundTimes();
+        
+        std::cout << "Queue Statistics" << std::endl;
+        
+        std::cout << "Q0 - Round Robin Queue" << std::endl;
+
+        std::cout 
+            << "\t - Average Waiting time = " << averageWaitingTimes["q0"] / 1000.0
+            << " seconds" << std::endl;
+        std::cout 
+            << "\t - Average Turn around time = " << averageTurnAroundTimes["q0"] /1000.0
+            << " seconds" << std::endl;
+
+        std::cout << "Q1 - Shortest Job First Queue" << std::endl;
+
+        std::cout 
+            << "\t - Average Waiting time = " << averageWaitingTimes["q1"] / 1000.0
+            <<  " seconds" << std::endl;
+        std::cout 
+            << "\t - Average Turn around time = " << averageTurnAroundTimes["q1"] / 1000.0
+            << " seconds" << std::endl;
+
+        std::cout << "Q2 - Shortest Job First Queue" << std::endl;
+
+        std::cout 
+            << "\t - Average Waiting time = " << averageWaitingTimes["q2"] / 1000.0
+            << " seconds" << std::endl;
+        std::cout 
+            << "\t - Average Turn around time = " << averageTurnAroundTimes["q2"] / 1000.0
+            << " seconds" << std::endl;
+
+        std::cout << "Q3 - First In First Out Queue" << std::endl;
+
+        std::cout 
+            << "\t - Average Waiting time = " << averageWaitingTimes["q3"] / 1000.0
+            << " seconds" << std::endl;
+        std::cout 
+            << "\t - Average Turn around time = " << averageTurnAroundTimes["q3"] / 1000.0
+            << " seconds" << std::endl;
     }
 
 } // namespace Core
