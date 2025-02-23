@@ -1,7 +1,6 @@
 #include "SchedulerBridge/ProcessAssigner.h"
 #include <queue>
 #include <functional>
-#include "Utility/TimeTracker.h"
 
 namespace SchedulerBridge
 {
@@ -15,10 +14,10 @@ namespace SchedulerBridge
         ProcessAssigner::getArrivedProcesses() const
     {
         std::vector<std::reference_wrapper<Process::ProcessControlBlock>> availableProcesses;
-        Utility::TimeTracker& time = Utility::TimeTracker::getInstance();
-        int currentTime = time.getTime();
 
         const std::vector<Process::ProcessControlBlock>& processes = processTable->getProcessList();
+
+        int currentTime = processes[nextProcessIndex].getArrivalTime();
 
         while (processes[nextProcessIndex].getArrivalTime() <= currentTime)
         {
@@ -27,11 +26,18 @@ namespace SchedulerBridge
 
             Process::ProcessControlBlock& process = *processPtr;
 
-            availableProcesses.push_back(process);
+            availableProcesses.push_back(std::ref(process));
             nextProcessIndex+=1;
         }
 
         return availableProcesses;
+    }
+
+    int ProcessAssigner::getTimeUntilNextProcessAssignment() const
+    {
+        const std::vector<Process::ProcessControlBlock>& processes = processTable->getProcessList();
+
+        return processes[nextProcessIndex].getArrivalTime();
     }
 
 } // namespace SchedulerBridge
