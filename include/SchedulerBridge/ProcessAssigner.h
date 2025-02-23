@@ -18,6 +18,8 @@ namespace SchedulerBridge
 
             std::vector<std::reference_wrapper<Process::ProcessControlBlock>>
                 getArrivedProcesses() const;
+
+            int getTimeUntilNextProcessAssignment() const;
     };
 
 } // namespace SchedulerBridge
