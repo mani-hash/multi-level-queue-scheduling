@@ -26,13 +26,8 @@ namespace Core
 
         int currentQueueIndex = 0;
 
-        while (true)
+        while (processTable->getTerminatedProcessCount() != processTable->getAllProcessCount())
         {
-            if (processTable->getTerminatedProcessCount() == processTable->getAllProcessCount())
-            {
-                break;
-            }
-
             std::vector<std::reference_wrapper<Process::ProcessControlBlock>> arrivedProcesses = 
                 processAssigner.getArrivedProcesses();
 
