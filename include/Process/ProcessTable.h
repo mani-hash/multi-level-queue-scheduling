@@ -14,6 +14,8 @@ namespace Process
             int terminatedProcess;
 
         public:
+            ProcessTable();
+
             void addProcess(const ProcessControlBlock& process);
 
             void removeProcess(int processId);

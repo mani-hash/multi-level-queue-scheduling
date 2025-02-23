@@ -5,6 +5,11 @@
 namespace Process
 {
 
+    ProcessTable::ProcessTable()
+    {
+        terminatedProcess = 0;
+    }
+
     void ProcessTable::addProcess(const ProcessControlBlock& process)
     {
         processes.push_back(process);
