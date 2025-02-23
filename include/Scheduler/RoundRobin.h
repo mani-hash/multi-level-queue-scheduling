@@ -16,6 +16,8 @@ namespace Scheduler
 
             int currentTimeQuantum;
 
+            const int maxTimeQuantum = 5000;
+
             bool shouldPreempt();
 
             void applyPreemption();
@@ -27,7 +29,7 @@ namespace Scheduler
 
             int removeFromQueueIfComplete();
 
-            void execute();
+            int execute(int executableTime);
 
             void idleQueue();
     };

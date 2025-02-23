@@ -1,8 +1,8 @@
 #include <iostream>
 #include <queue>
+#include "macros.h"
 #include "Scheduler/FirstInFirstOut.h"
 #include "Process/ProcessControlBlock.h"
-#include "Utility/TimeTracker.h"
 
 namespace Scheduler
 {
@@ -37,16 +37,38 @@ namespace Scheduler
         return processId;
     }
 
-    void FirstInFirstOut::execute()
+    int FirstInFirstOut::execute(int executableTime)
     {
+        int executedTime = 0;
+
+        // throw error if executable time is greater than time quantum
+        if (executableTime > QUEUE_TIME)
+        {
+            throw new std::invalid_argument("Executable time cannot be greater than time quantum");
+        }
+
         if (queue.empty())
         {
-            return;
+            return executedTime;
         }
 
         Process::ProcessControlBlock& process = queue.front().get();
         process.setState(Process::ACTIVE);
-        process.decrementRemainingBurstTime();
+
+        int remainingBurstTime = process.getRemainingBurstTime();
+        
+        if (executableTime > remainingBurstTime)
+        {
+            executedTime = remainingBurstTime;
+        }
+        else
+        {
+            executedTime = executableTime;
+        }
+
+        process.setRemainingBurstTime(executedTime);
+
+        return executedTime;
     }
 
     void FirstInFirstOut::idleQueue()

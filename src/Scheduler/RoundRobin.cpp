@@ -60,11 +60,19 @@ namespace Scheduler
         return processId;
     }
 
-    void RoundRobin::execute()
+    int RoundRobin::execute(int executableTime)
     {
+        int executedTime = 0;
+
+        // throw error if executable time is greater than time quantum
+        if (executableTime > QUEUE_TIME)
+        {
+            throw new std::invalid_argument("Executable time cannot be greater than time quantum");
+        }
+
         if (queue.empty())
         {
-            return;
+            return executedTime;
         }
 
         if (shouldPreempt())
@@ -75,9 +83,28 @@ namespace Scheduler
         Process::ProcessControlBlock& process = queue.front().get();
         process.setState(Process::ACTIVE);
 
-        process.decrementRemainingBurstTime();
+        int remainingBurstTime = process.getRemainingBurstTime();
+        int remainingQuantumTime = maxTimeQuantum - currentTimeQuantum;
 
-        currentTimeQuantum+=1;
+        // calculate the time which is allowed for this process
+        // each process is contrained by roud robin time quantum
+        int availableTime = remainingBurstTime > remainingQuantumTime ?
+            remainingQuantumTime : remainingBurstTime;
+        
+        if (executableTime > availableTime)
+        {
+            executedTime = availableTime;
+        }
+        else
+        {
+            executedTime = executableTime;
+        }
+
+        process.setRemainingBurstTime(executedTime);
+
+        currentTimeQuantum = (currentTimeQuantum + executedTime) % maxTimeQuantum;
+
+        return executedTime;
     }
 
     void RoundRobin::idleQueue()
