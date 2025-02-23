@@ -17,17 +17,11 @@ namespace Utility
         return timeTracker;
     }
 
-    void TimeTracker::tick()
+    void TimeTracker::setTime(int elapsedTime)
     {
-        overallTime+=1;
-        if (currentTimeQuantum >= QUEUE_TIME)
-        {
-            currentTimeQuantum = 0;
-        }
-        else
-        {
-            currentTimeQuantum+=1;
-        }
+        overallTime+=elapsedTime;
+
+        currentTimeQuantum = (currentTimeQuantum + elapsedTime) % QUEUE_TIME;
     }
 
     int TimeTracker::getTime() const

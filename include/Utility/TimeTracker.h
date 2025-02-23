@@ -17,7 +17,7 @@ namespace Utility
             TimeTracker(const TimeTracker&) = delete;
             TimeTracker& operator = (const TimeTracker&) = delete;
             
-            void tick();
+            void setTime(int elapsedTime);
 
             int getTime() const;
 
