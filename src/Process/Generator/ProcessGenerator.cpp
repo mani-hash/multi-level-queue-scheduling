@@ -43,7 +43,7 @@ namespace Process::Generator
 
     int ProcessGenerator::generateBurstTime()
     {
-        static Utility::RandomNumberGenerator burstTimeGenerator(1, 60000);
+        static Utility::RandomNumberGenerator burstTimeGenerator(1, BURST_TIME);
 
         return burstTimeGenerator.generate();
 
