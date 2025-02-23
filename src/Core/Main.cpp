@@ -44,7 +44,18 @@ namespace Core
                 );
             }
 
-            queues[currentQueueIndex]->execute();
+            // get execution time until next new process arrives
+            int executableTime = 
+                processAssigner.getTimeUntilNextProcessAssignment() - time.getTime();
+
+            // change execution time if it exceeds the time quantum
+            int remainingTimeQuantum = QUEUE_TIME - time.getCurrentTimeQuantum();
+            if (executableTime > remainingTimeQuantum)
+            {
+                executableTime = remainingTimeQuantum;
+            }
+
+            int executedTime = queues[currentQueueIndex]->execute(executableTime);
 
             int processId = queues[currentQueueIndex]->removeFromQueueIfComplete();
 
@@ -53,15 +64,15 @@ namespace Core
                 processTable->incrementTerminatedProcessCount();
             }
 
-            processTable->incrementWaitingTime();
+            processTable->incrementWaitingTime(executedTime);
 
-            if (time.getCurrentTimeQuantum() >= QUEUE_TIME)
+            if (executableTime + remainingTimeQuantum >= QUEUE_TIME)
             {
                 queues[currentQueueIndex]->idleQueue();
                 currentQueueIndex = (currentQueueIndex + 1) % (sizeof(queues)/sizeof(queues[0]));
             }
 
-            time.tick();
+            time.setTime(executedTime);
         }        
     }
 
