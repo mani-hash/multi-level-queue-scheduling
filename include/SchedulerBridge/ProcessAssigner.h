@@ -11,6 +11,8 @@ namespace SchedulerBridge
     {
         private:
             const std::shared_ptr<Process::ProcessTable> processTable;
+
+            static int nextProcessIndex;
         public:
             ProcessAssigner(std::shared_ptr<Process::ProcessTable> processTable);
 

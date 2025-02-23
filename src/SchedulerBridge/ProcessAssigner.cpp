@@ -1,4 +1,6 @@
 #include "SchedulerBridge/ProcessAssigner.h"
+#include <queue>
+#include <functional>
 #include "Utility/TimeTracker.h"
 
 namespace SchedulerBridge
@@ -7,44 +9,29 @@ namespace SchedulerBridge
     ProcessAssigner::ProcessAssigner(std::shared_ptr<Process::ProcessTable> processTable): 
         processTable(processTable) {}
 
+    int ProcessAssigner::nextProcessIndex = 0;
+
     std::vector<std::reference_wrapper<Process::ProcessControlBlock>>
         ProcessAssigner::getArrivedProcesses() const
     {
+        std::vector<std::reference_wrapper<Process::ProcessControlBlock>> availableProcesses;
         Utility::TimeTracker& time = Utility::TimeTracker::getInstance();
+        int currentTime = time.getTime();
 
-        const std::vector<Process::ProcessControlBlock>& processes = processTable
-            ->getProcessList();
+        const std::vector<Process::ProcessControlBlock>& processes = processTable->getProcessList();
 
-        std::vector<std::reference_wrapper<Process::ProcessControlBlock>> arrivedProcesses;
-
-        for (auto process = processes.cbegin(); process != processes.cend(); ++process)
+        while (processes[nextProcessIndex].getArrivalTime() <= currentTime)
         {
-            if (process->getArrivalTime() < time.getTime())
-            {
-                continue;
-            }
-            else if (process->getArrivalTime() > time.getTime())
-            {
-                break;
-            }
-            else
-            {
-                Process::ProcessControlBlock* retrievedProcess = processTable
-                    ->getProcess(process->getProcessId());
+            Process::ProcessControlBlock* processPtr = 
+                processTable->getProcess(processes[nextProcessIndex].getProcessId());
 
-                if (retrievedProcess == nullptr)
-                {
-                    perror("Process is not available\n");
-                    exit(EXIT_FAILURE);
-                }
+            Process::ProcessControlBlock& process = *processPtr;
 
-                Process::ProcessControlBlock& referenceProcess = *retrievedProcess; 
-
-                arrivedProcesses.push_back(std::ref(referenceProcess));
-            }
+            availableProcesses.push_back(process);
+            nextProcessIndex+=1;
         }
 
-        return arrivedProcesses;
+        return availableProcesses;
     }
 
 } // namespace SchedulerBridge
