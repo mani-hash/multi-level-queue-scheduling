@@ -18,6 +18,14 @@ namespace Core
 
     void Init::initiateAllProcess()
     {
+        std::cout << std::endl;
+        std::cout << std::endl;
+        
+        std::cout << "Enter process count for each priority level : " << std::endl;
+
+        std::cout << std::endl;
+        std::cout << std::endl;
+
         Process::Generator::HighestProcessGenerator highestProcessGen(processTable);
         highestProcessGen.getProcessCountFromUser();
         highestProcessGen.generate();
