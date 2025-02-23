@@ -1,4 +1,6 @@
 #include "SchedulerBridge/ProcessAssigner.h"
+#include "Utility/TimeTracker.h"
+#include <iostream>
 #include <queue>
 #include <functional>
 
@@ -17,9 +19,12 @@ namespace SchedulerBridge
 
         const std::vector<Process::ProcessControlBlock>& processes = processTable->getProcessList();
 
-        int currentTime = processes[nextProcessIndex].getArrivalTime();
+        Utility::TimeTracker& time = Utility::TimeTracker::getInstance();
 
-        while (processes[nextProcessIndex].getArrivalTime() <= currentTime)
+        int currentTime = (time.getTime() == 0) ? 
+            processes[nextProcessIndex].getArrivalTime() : time.getTime();
+
+        while (nextProcessIndex < processes.size() && processes[nextProcessIndex].getArrivalTime() <= currentTime)
         {
             Process::ProcessControlBlock* processPtr = 
                 processTable->getProcess(processes[nextProcessIndex].getProcessId());
@@ -37,7 +42,16 @@ namespace SchedulerBridge
     {
         const std::vector<Process::ProcessControlBlock>& processes = processTable->getProcessList();
 
-        return processes[nextProcessIndex].getArrivalTime();
+        if (nextProcessIndex < processes.size())
+        {
+            return 
+                processes[nextProcessIndex].getArrivalTime() 
+                - 
+                Utility::TimeTracker::getInstance().getTime();
+        }
+
+        return 0;
+
     }
 
 } // namespace SchedulerBridge
