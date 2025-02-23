@@ -21,7 +21,7 @@ namespace Process
             int priority;
             int arrivalTime;
             int burstTime;
-            int waitingTime;
+            long int waitingTime;
             int remainingBurstTime;
 
         public:
@@ -32,7 +32,7 @@ namespace Process
                 int priority,
                 int arrivalTime,
                 int burstTime,
-                int waitingTime
+                long int waitingTime
             );
 
             int getProcessId() const;
@@ -41,7 +41,7 @@ namespace Process
 
             int getBurstTime() const;
 
-            int getWaitingTime() const;
+            long int getWaitingTime() const;
 
             void setWaitingTime(int elapsedTime);
 

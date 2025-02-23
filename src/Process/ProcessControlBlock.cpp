@@ -10,7 +10,7 @@ namespace Process
         int priority,
         int arrivalTime,
         int burstTime,
-        int waitingTime
+        long int waitingTime
     )
     {
         this->processId = processId;
@@ -32,7 +32,7 @@ namespace Process
         return arrivalTime;
     }
 
-    int ProcessControlBlock::getWaitingTime() const
+    long int ProcessControlBlock::getWaitingTime() const
     {
         return waitingTime;
     }
