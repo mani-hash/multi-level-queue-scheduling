@@ -35,9 +35,9 @@ namespace Process
 
             void incrementWaitingTime(int elapsedTime);
 
-            std::map<std::string, float> getAverageWaitingTimes() const;
+            std::map<std::string, double> getAverageWaitingTimes() const;
 
-            std::map<std::string, float> getAverageTurnAroundTimes() const;
+            std::map<std::string, double> getAverageTurnAroundTimes() const;
     };
 
 } // namespace Process
