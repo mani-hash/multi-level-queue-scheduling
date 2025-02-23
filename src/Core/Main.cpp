@@ -45,14 +45,26 @@ namespace Core
             }
 
             // get execution time until next new process arrives
-            int executableTime = 
-                processAssigner.getTimeUntilNextProcessAssignment() - time.getTime();
+            int executableTimeUntilNextProcess = 
+                processAssigner.getTimeUntilNextProcessAssignment();
 
-            // change execution time if it exceeds the time quantum
             int remainingTimeQuantum = QUEUE_TIME - time.getCurrentTimeQuantum();
-            if (executableTime > remainingTimeQuantum)
+
+            int executableTime = 0;
+
+            if (executableTimeUntilNextProcess <= 0)
             {
-                executableTime = remainingTimeQuantum;
+                executableTime = QUEUE_TIME;
+            }
+            else
+            {
+                executableTime = executableTimeUntilNextProcess;
+
+                 // change execution time if it exceeds the time quantum
+                if (executableTime > remainingTimeQuantum)
+                {
+                    executableTime = remainingTimeQuantum;
+                }
             }
 
             int executedTime = queues[currentQueueIndex]->execute(executableTime);
@@ -66,13 +78,13 @@ namespace Core
 
             processTable->incrementWaitingTime(executedTime);
 
-            if (executableTime + remainingTimeQuantum >= QUEUE_TIME)
+            if (executedTime + remainingTimeQuantum >= QUEUE_TIME || executedTime == 0)
             {
                 queues[currentQueueIndex]->idleQueue();
-                currentQueueIndex = (currentQueueIndex + 1) % (sizeof(queues)/sizeof(queues[0]));
+                currentQueueIndex = (currentQueueIndex + 1) % 4;
             }
 
-            time.setTime(executedTime);
+            time.setTime(executableTimeUntilNextProcess, executedTime);
         }        
     }
 
