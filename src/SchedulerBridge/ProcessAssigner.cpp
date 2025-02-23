@@ -40,7 +40,7 @@ namespace SchedulerBridge
 
                 Process::ProcessControlBlock& referenceProcess = *retrievedProcess; 
 
-                arrivedProcesses.push_back(referenceProcess);
+                arrivedProcesses.push_back(std::ref(referenceProcess));
             }
         }
 
