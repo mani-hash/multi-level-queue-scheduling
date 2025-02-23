@@ -2,6 +2,7 @@
 #define PROCESSTABLE_H
 
 #include <vector>
+#include <map>
 #include "Process/ProcessControlBlock.h"
 
 namespace Process
@@ -33,6 +34,10 @@ namespace Process
             int getAllProcessCount() const;
 
             void incrementWaitingTime(int elapsedTime);
+
+            std::map<std::string, float> getAverageWaitingTimes() const;
+
+            std::map<std::string, float> getAverageTurnAroundTimes() const;
     };
 
 } // namespace Process
