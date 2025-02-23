@@ -91,8 +91,8 @@ namespace Core
 
     void Main::displayQueueStatistics() const
     {
-        std::map<std::string, float> averageWaitingTimes = processTable->getAverageWaitingTimes();
-        std::map<std::string, float> averageTurnAroundTimes = processTable->getAverageTurnAroundTimes();
+        std::map<std::string, double> averageWaitingTimes = processTable->getAverageWaitingTimes();
+        std::map<std::string, double> averageTurnAroundTimes = processTable->getAverageTurnAroundTimes();
         
         std::cout << "Queue Statistics" << std::endl;
         
