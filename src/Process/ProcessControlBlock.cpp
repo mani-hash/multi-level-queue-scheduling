@@ -37,9 +37,9 @@ namespace Process
         return waitingTime;
     }
 
-    void ProcessControlBlock::incrementWaitingTime()
+    void ProcessControlBlock::setWaitingTime(int elapsedTime)
     {
-        waitingTime+=1;
+        waitingTime+=elapsedTime;
     }
 
     int ProcessControlBlock::getBurstTime() const
@@ -52,9 +52,9 @@ namespace Process
         return remainingBurstTime;
     }
 
-    void ProcessControlBlock::decrementRemainingBurstTime()
+    void ProcessControlBlock::setRemainingBurstTime(int elapsedTime)
     {
-        remainingBurstTime-=1;
+        remainingBurstTime-=elapsedTime;
     }
 
     int ProcessControlBlock::getPriority() const

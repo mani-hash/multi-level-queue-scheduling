@@ -22,6 +22,8 @@ namespace Core
             Main(std::shared_ptr<Process::ProcessTable> processTable);
 
             void execute();
+
+            void displayQueueStatistics() const;
     };
 
 } // namespace Core

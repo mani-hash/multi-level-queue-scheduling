@@ -39,7 +39,7 @@ namespace Scheduler
 
             int removeFromQueueIfComplete();
 
-            void execute();
+            int execute(int executableTime);
 
             void idleQueue();
     };

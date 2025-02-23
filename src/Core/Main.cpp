@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <functional>
+#include <map>
 #include "macros.h"
 #include "Utility/TimeTracker.h"
 #include "SchedulerBridge/QueueAssigner.h"
@@ -26,13 +27,8 @@ namespace Core
 
         int currentQueueIndex = 0;
 
-        while (true)
+        while (processTable->getTerminatedProcessCount() != processTable->getAllProcessCount())
         {
-            if (processTable->getTerminatedProcessCount() == processTable->getAllProcessCount())
-            {
-                break;
-            }
-
             std::vector<std::reference_wrapper<Process::ProcessControlBlock>> arrivedProcesses = 
                 processAssigner.getArrivedProcesses();
 
@@ -49,7 +45,30 @@ namespace Core
                 );
             }
 
-            queues[currentQueueIndex]->execute();
+            // get execution time until next new process arrives
+            int executableTimeUntilNextProcess = 
+                processAssigner.getTimeUntilNextProcessAssignment();
+
+            int remainingTimeQuantum = QUEUE_TIME - time.getCurrentTimeQuantum();
+
+            int executableTime = 0;
+
+            if (executableTimeUntilNextProcess <= 0)
+            {
+                executableTime = QUEUE_TIME;
+            }
+            else
+            {
+                executableTime = executableTimeUntilNextProcess;
+
+                 // change execution time if it exceeds the time quantum
+                if (executableTime > remainingTimeQuantum)
+                {
+                    executableTime = remainingTimeQuantum;
+                }
+            }
+
+            int executedTime = queues[currentQueueIndex]->execute(executableTime);
 
             int processId = queues[currentQueueIndex]->removeFromQueueIfComplete();
 
@@ -58,16 +77,60 @@ namespace Core
                 processTable->incrementTerminatedProcessCount();
             }
 
-            processTable->incrementWaitingTime();
+            processTable->incrementWaitingTime(executedTime);
 
-            if (time.getCurrentTimeQuantum() >= QUEUE_TIME)
+            if (executedTime + remainingTimeQuantum >= QUEUE_TIME || executedTime == 0)
             {
                 queues[currentQueueIndex]->idleQueue();
-                currentQueueIndex = (currentQueueIndex + 1) % (sizeof(queues)/sizeof(queues[0]));
+                currentQueueIndex = (currentQueueIndex + 1) % 4;
             }
 
-            time.tick();
+            time.setTime(executableTimeUntilNextProcess, executedTime);
         }        
+    }
+
+    void Main::displayQueueStatistics() const
+    {
+        std::map<std::string, float> averageWaitingTimes = processTable->getAverageWaitingTimes();
+        std::map<std::string, float> averageTurnAroundTimes = processTable->getAverageTurnAroundTimes();
+        
+        std::cout << "Queue Statistics" << std::endl;
+        
+        std::cout << "Q0 - Round Robin Queue" << std::endl;
+
+        std::cout 
+            << "\t - Average Waiting time = " << averageWaitingTimes["q0"] / 1000.0
+            << " seconds" << std::endl;
+        std::cout 
+            << "\t - Average Turn around time = " << averageTurnAroundTimes["q0"] /1000.0
+            << " seconds" << std::endl;
+
+        std::cout << "Q1 - Shortest Job First Queue" << std::endl;
+
+        std::cout 
+            << "\t - Average Waiting time = " << averageWaitingTimes["q1"] / 1000.0
+            <<  " seconds" << std::endl;
+        std::cout 
+            << "\t - Average Turn around time = " << averageTurnAroundTimes["q1"] / 1000.0
+            << " seconds" << std::endl;
+
+        std::cout << "Q2 - Shortest Job First Queue" << std::endl;
+
+        std::cout 
+            << "\t - Average Waiting time = " << averageWaitingTimes["q2"] / 1000.0
+            << " seconds" << std::endl;
+        std::cout 
+            << "\t - Average Turn around time = " << averageTurnAroundTimes["q2"] / 1000.0
+            << " seconds" << std::endl;
+
+        std::cout << "Q3 - First In First Out Queue" << std::endl;
+
+        std::cout 
+            << "\t - Average Waiting time = " << averageWaitingTimes["q3"] / 1000.0
+            << " seconds" << std::endl;
+        std::cout 
+            << "\t - Average Turn around time = " << averageTurnAroundTimes["q3"] / 1000.0
+            << " seconds" << std::endl;
     }
 
 } // namespace Core

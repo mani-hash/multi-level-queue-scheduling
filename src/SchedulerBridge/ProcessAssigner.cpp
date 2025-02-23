@@ -1,5 +1,8 @@
 #include "SchedulerBridge/ProcessAssigner.h"
 #include "Utility/TimeTracker.h"
+#include <iostream>
+#include <queue>
+#include <functional>
 
 namespace SchedulerBridge
 {
@@ -7,44 +10,48 @@ namespace SchedulerBridge
     ProcessAssigner::ProcessAssigner(std::shared_ptr<Process::ProcessTable> processTable): 
         processTable(processTable) {}
 
+    int ProcessAssigner::nextProcessIndex = 0;
+
     std::vector<std::reference_wrapper<Process::ProcessControlBlock>>
         ProcessAssigner::getArrivedProcesses() const
     {
+        std::vector<std::reference_wrapper<Process::ProcessControlBlock>> availableProcesses;
+
+        const std::vector<Process::ProcessControlBlock>& processes = processTable->getProcessList();
+
         Utility::TimeTracker& time = Utility::TimeTracker::getInstance();
 
-        const std::vector<Process::ProcessControlBlock>& processes = processTable
-            ->getProcessList();
+        int currentTime = (time.getTime() == 0) ? 
+            processes[nextProcessIndex].getArrivalTime() : time.getTime();
 
-        std::vector<std::reference_wrapper<Process::ProcessControlBlock>> arrivedProcesses;
-
-        for (auto process = processes.cbegin(); process != processes.cend(); ++process)
+        while (nextProcessIndex < processes.size() && processes[nextProcessIndex].getArrivalTime() <= currentTime)
         {
-            if (process->getArrivalTime() < time.getTime())
-            {
-                continue;
-            }
-            else if (process->getArrivalTime() > time.getTime())
-            {
-                break;
-            }
-            else
-            {
-                Process::ProcessControlBlock* retrievedProcess = processTable
-                    ->getProcess(process->getProcessId());
+            Process::ProcessControlBlock* processPtr = 
+                processTable->getProcess(processes[nextProcessIndex].getProcessId());
 
-                if (retrievedProcess == nullptr)
-                {
-                    perror("Process is not available\n");
-                    exit(EXIT_FAILURE);
-                }
+            Process::ProcessControlBlock& process = *processPtr;
 
-                Process::ProcessControlBlock& referenceProcess = *retrievedProcess; 
-
-                arrivedProcesses.push_back(std::ref(referenceProcess));
-            }
+            availableProcesses.push_back(std::ref(process));
+            nextProcessIndex+=1;
         }
 
-        return arrivedProcesses;
+        return availableProcesses;
+    }
+
+    int ProcessAssigner::getTimeUntilNextProcessAssignment() const
+    {
+        const std::vector<Process::ProcessControlBlock>& processes = processTable->getProcessList();
+
+        if (nextProcessIndex < processes.size())
+        {
+            return 
+                processes[nextProcessIndex].getArrivalTime() 
+                - 
+                Utility::TimeTracker::getInstance().getTime();
+        }
+
+        return 0;
+
     }
 
 } // namespace SchedulerBridge

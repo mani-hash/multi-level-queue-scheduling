@@ -10,5 +10,7 @@ int main()
     Core::Main main(Init.getProcessTable());
 
     main.execute();
+
+    main.displayQueueStatistics();
     return 0;
 }
