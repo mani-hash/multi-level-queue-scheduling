@@ -92,11 +92,13 @@ namespace Core
     void Main::displayQueueStatistics() const
     {
         processTable->printAllProcess();
-        
+
         std::map<std::string, double> averageWaitingTimes = processTable->getAverageWaitingTimes();
         std::map<std::string, double> averageTurnAroundTimes = processTable->getAverageTurnAroundTimes();
         
+        std::cout << std::endl;
         std::cout << "Queue Statistics" << std::endl;
+        std::cout << std::endl;
         
         std::cout << "Q0 - Round Robin Queue" << std::endl;
 
@@ -107,6 +109,8 @@ namespace Core
             << "\t - Average Turn around time = " << averageTurnAroundTimes["q0"] /1000.0
             << " seconds" << std::endl;
 
+        std::cout << std::endl;
+
         std::cout << "Q1 - Shortest Job First Queue" << std::endl;
 
         std::cout 
@@ -115,6 +119,8 @@ namespace Core
         std::cout 
             << "\t - Average Turn around time = " << averageTurnAroundTimes["q1"] / 1000.0
             << " seconds" << std::endl;
+
+        std::cout << std::endl;
 
         std::cout << "Q2 - Shortest Job First Queue" << std::endl;
 
@@ -125,6 +131,8 @@ namespace Core
             << "\t - Average Turn around time = " << averageTurnAroundTimes["q2"] / 1000.0
             << " seconds" << std::endl;
 
+        std::cout << std::endl;
+        
         std::cout << "Q3 - First In First Out Queue" << std::endl;
 
         std::cout 
@@ -133,6 +141,19 @@ namespace Core
         std::cout 
             << "\t - Average Turn around time = " << averageTurnAroundTimes["q3"] / 1000.0
             << " seconds" << std::endl;
+
+        std::cout << std::endl;
+        
+        std::cout << "Total no of processes = " << processTable->getAllProcessCount() << std::endl;
+
+        std::cout << std::endl;
+
+        std::cout 
+            << "Total simulation time = "
+            << Utility::TimeTracker::getInstance().getTime() / 1000.0 
+            << " seconds"
+            << std::endl;
+
     }
 
 } // namespace Core
