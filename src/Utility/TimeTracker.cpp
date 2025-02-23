@@ -17,11 +17,18 @@ namespace Utility
         return timeTracker;
     }
 
-    void TimeTracker::setTime(int elapsedTime)
+    void TimeTracker::setTime(int executableTimeUntilNextProcess, int elapsedTime)
     {
-        overallTime+=elapsedTime;
-
-        currentTimeQuantum = (currentTimeQuantum + elapsedTime) % QUEUE_TIME;
+        if (elapsedTime == 0)
+        {
+            overallTime+=executableTimeUntilNextProcess;
+            currentTimeQuantum = 0;
+        }
+        else
+        {
+            overallTime+=elapsedTime;
+            currentTimeQuantum = (currentTimeQuantum + elapsedTime) % QUEUE_TIME;
+        }
     }
 
     int TimeTracker::getTime() const
