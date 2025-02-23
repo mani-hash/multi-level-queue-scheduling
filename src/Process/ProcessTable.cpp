@@ -65,13 +65,13 @@ namespace Process
         return processes.size();
     }
 
-    void ProcessTable::incrementWaitingTime()
+    void ProcessTable::incrementWaitingTime(int elapsedTime)
     {
         for (auto processIter = processes.begin(); processIter != processes.end(); ++processIter)
         {
             if (processIter->getState() == WAITING)
             {
-                processIter->incrementWaitingTime();
+                processIter->setWaitingTime(elapsedTime);
             }
         }
     }

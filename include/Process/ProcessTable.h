@@ -32,7 +32,7 @@ namespace Process
 
             int getAllProcessCount() const;
 
-            void incrementWaitingTime();
+            void incrementWaitingTime(int elapsedTime);
     };
 
 } // namespace Process
