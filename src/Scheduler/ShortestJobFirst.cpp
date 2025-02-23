@@ -68,7 +68,7 @@ namespace Scheduler
 
         if (queue.empty())
         {
-            return 0;
+            return executedTime;
         }
 
         Process::ProcessControlBlock& process = queue.top().get();
