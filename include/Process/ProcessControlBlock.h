@@ -43,11 +43,11 @@ namespace Process
 
             int getWaitingTime() const;
 
-            void setWaitingTime(int elapsedTime);
+            void incrementWaitingTime();
 
             int getRemainingBurstTime() const;
 
-            void setRemainingBurstTime(int elapsedTime);
+            void decrementRemainingBurstTime();
 
             int getPriority() const;
 
