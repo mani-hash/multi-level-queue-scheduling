@@ -5,10 +5,7 @@
 namespace Process
 {
 
-    ProcessTable::ProcessTable()
-    {
-        terminatedProcess = 0;
-    }
+    ProcessTable::ProcessTable(): terminatedProcess(0) {}
 
     void ProcessTable::addProcess(const ProcessControlBlock& process)
     {
@@ -74,7 +71,7 @@ namespace Process
         {
             if (processIter->getState() == WAITING)
             {
-                processIter->setWaitingTime(1);
+                processIter->incrementWaitingTime();
             }
         }
     }
