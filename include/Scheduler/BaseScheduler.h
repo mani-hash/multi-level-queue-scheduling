@@ -18,7 +18,7 @@ namespace Scheduler
 
             virtual int removeFromQueueIfComplete() = 0;
 
-            virtual void execute() = 0;
+            virtual int execute(int executableTime) = 0;
 
             virtual void idleQueue() = 0;
     };
