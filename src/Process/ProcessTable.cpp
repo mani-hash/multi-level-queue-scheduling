@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <algorithm>
 #include "Process/ProcessTable.h"
 #include "Process/process.h"
@@ -204,6 +205,39 @@ namespace Process
         averageTurnAroundTimes["q3"] = static_cast<double>(q3.totalTurnAroundTime) / q3.noOfProcess;
 
         return averageTurnAroundTimes;
+    }
+
+    void ProcessTable::printAllProcess() const
+    {
+        std::cout << std::endl;
+        std::cout << "Process Table" << std::endl;
+        std::cout << std::endl;
+        
+        std::cout 
+            << std::setw(5) << "Pid"
+            << std::setw(10) << "Priority"
+            << std::setw(20) << "Arrival time(s)"
+            << std::setw(20) << "Burst Time(s)" 
+            << std::setw(20) << "Waiting time(s)" 
+            << std::setw(20) << "Turnaround time(s)"
+            << std::setw(20) << "Completion time(s)"
+            << std::endl;
+
+        for (auto processIter = processes.begin(); processIter != processes.end(); ++processIter)
+        {
+            long int turnAroundTime = processIter->getBurstTime() + processIter->getWaitingTime();
+            long int completionTime = processIter->getArrivalTime() + turnAroundTime;
+
+            std::cout 
+                << std::setw(5) << processIter->getProcessId()
+                << std::setw(10) << processIter->getPriority()
+                << std::setw(20) << processIter->getArrivalTime() / 1000.0
+                << std::setw(20) << processIter->getBurstTime() / 1000.0 
+                << std::setw(20) << processIter->getWaitingTime() / 1000.0
+                << std::setw(20) << turnAroundTime / 1000.0
+                << std::setw(20) << completionTime / 1000.0
+                << std::endl;
+        }
     }
 
 } // namespace Process

@@ -38,6 +38,8 @@ namespace Process
             std::map<std::string, double> getAverageWaitingTimes() const;
 
             std::map<std::string, double> getAverageTurnAroundTimes() const;
+
+            void printAllProcess() const;
     };
 
 } // namespace Process
